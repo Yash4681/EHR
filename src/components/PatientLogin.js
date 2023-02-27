@@ -1,16 +1,31 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  let navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const userData = {
-      email,
-      password
-    };
-    console.log(userData); // Replace with API call to submit data to backend
+    const response = await fetch(`http://localhost:5000/api/patient/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email, password})
+          });
+  
+          const json = await response.json();
+          console.log(json);
+          if(json.success){
+            localStorage.setItem("token", json.token);
+            navigate("/");
+            alert("Logged in Successfully", "success");
+          }else{
+            alert("Invalid Details", "danger");
+          }
   };
 
   return (
@@ -19,12 +34,12 @@ const LoginPage = () => {
         <h1>Patients's Login</h1>
         <form onSubmit={handleSubmit}>
             <div className="mb-3">
-                <label for="exampleInputEmail1" className="form-label">Email address</label>
+                <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                 <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  value={email} onChange={(e) => setEmail(e.target.value)} required />
                 <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div className="mb-3">
-                <label for="exampleInputPassword1" className="form-label">Password</label>
+                <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                 <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>

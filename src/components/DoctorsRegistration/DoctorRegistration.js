@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './doctorRegistration.css';
 
 const DoctorRegistrationForm = () => {
+  let navigate = useNavigate();
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -12,20 +15,25 @@ const DoctorRegistrationForm = () => {
   const [address, setAddress] = useState('');
   const [contact, setContact] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    const patientData = {
-        firstName,
-        lastName,
-        email,
-        password,
-        dateOfBirth,
-        gender,
-        speciality,
-        address,
-        contact
-      };
-      console.log(patientData); 
+    const response = await fetch(`http://localhost:5000/api/doctor/createdoctor`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({firstName, lastName, email, password, dob:dateOfBirth, gender, speciality, address, contact})
+        });
+
+        const json = await response.json();
+        console.log(json);
+        if(json.success){
+          localStorage.setItem("token", json.token);
+          navigate("/DoctorLogin");
+          alert("Created Account Successfully", "success");
+        }else{
+          alert("Invalid Details", "danger");
+        }
   };
 
   return (

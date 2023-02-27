@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./PatientRegistration.css";
 
 const PatientRegistrationForm = () => {
+  let navigate = useNavigate();
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
@@ -11,19 +14,25 @@ const PatientRegistrationForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    const patientData = {
-      firstName,
-      lastName,
-      dateOfBirth,
-      gender,
-      email,
-      password,
-      phoneNumber,
-      address
-    };
-    console.log(patientData); // Replace with API call to submit data to backend
+    const response = await fetch(`http://localhost:5000/api/patient/createpatient`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({firstName, lastName, dob:dateOfBirth, gender, email, password, phoneNumber, address})
+        });
+
+        const json = await response.json();
+        console.log(json);
+        if(json.success){
+          localStorage.setItem("token", json.token);
+          navigate("/PatientLogin");
+          alert("Created Account Successfully", "success");
+        }else{
+          alert("Invalid Details", "danger");
+        }
   };
 
   return (

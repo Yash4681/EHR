@@ -128,4 +128,16 @@ router.post("/getdoctor", fetchuser ,async (req,res) => {
   }
 });
 
+//ROUTE 4: Get all doctor details using post"/api/doctor/getalldoctor" - Login required
+router.get("/getalldoctor", async (req,res) => {
+
+  try {
+    const user = await Doctor.find().select("-password");
+    res.send(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal error occured");
+  }
+});
+
 module.exports = router;

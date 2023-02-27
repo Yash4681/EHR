@@ -127,4 +127,16 @@ router.post("/getpatient", fetchuser ,async (req,res) => {
   }
 });
 
+//ROUTE 4: Get all patient details using post"/api/patient/getallpatient" - Login required
+router.get("/getallpatient", async (req,res) => {
+
+  try {
+    const user = await Patient.find().select("-password");
+    res.send(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal error occured");
+  }
+});
+
 module.exports = router;
