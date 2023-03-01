@@ -27,7 +27,7 @@ function Admin() {
             <p>View a list of all doctors in the system.</p>
           </div>
         </a>
-        <a href="/appointments" className="admin-link">
+        <a href="Appointments" className="admin-link">
           <div className="admin-link-icon">
             <i className="far fa-calendar-check"></i>
           </div>
@@ -54,7 +54,7 @@ function Admin() {
             <p>Add a new doctor to the system.</p>
           </div>
         </a>
-        <a href="/schedule-appointment" className="admin-link">
+        <a href="ScheduleAppointment" className="admin-link">
           <div className="admin-link-icon">
             <i className="far fa-calendar-plus"></i>
           </div>

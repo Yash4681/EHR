@@ -12,6 +12,7 @@ app.use(cors())
 //Available routes
 app.use("/api/patient", require("./routes/patient"));
 app.use("/api/doctor", require("./routes/doctor"));
+app.use("/api/appointment", require("./routes/appointment"));
 
 app.get('/', (req, res) => {
   res.send('Hello Yash!')

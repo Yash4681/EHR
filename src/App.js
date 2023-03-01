@@ -7,24 +7,27 @@ import AdminLogin from './components/AdminLogin'
 import DoctorRegistration from './components/DoctorsRegistration/DoctorRegistration'
 import PatientRegistration from './components/PatientRegistration/PatientRegister'
 import bg from '../src/bg.png'
+import ScheduledAppointments from './components/ScheduledAppointments/ScheduledAppointments';
+import AppointmentBooking from './components/AppointmentBooking/AppointmentBooking';
 
 function App() {
-  return (<>
+  return (
+    <BrowserRouter>
           <NavBar />
           <div>
             <img src = {bg} alt = "" width="1920" height="720" display= "inline-block" style={{position: 'fixed', zIndex: -1}}/>
           </div>
-          <BrowserRouter>
-      <Routes>
-          <Route path="Admin" element={<Admin/>} />
-          <Route path="PatientLogin" element={<PatientLogin/>} />
-          <Route path="DoctorLogin" element={<DoctorLogin/>} />
-          <Route path="AdminLogin" element={<AdminLogin/>} />
-          <Route path="PatientRegistration" element={<PatientRegistration/>} />
-          <Route path="DoctorRegistration" element={<DoctorRegistration/>} />
-      </Routes>
+          <Routes>
+              <Route exact path="Admin" element={<Admin/>} />
+              <Route exact path="PatientLogin" element={<PatientLogin/>} />
+              <Route exact path="DoctorLogin" element={<DoctorLogin/>} />
+              <Route exact path="AdminLogin" element={<AdminLogin/>} />
+              <Route exact path="PatientRegistration" element={<PatientRegistration/>} />
+              <Route exact path="DoctorRegistration" element={<DoctorRegistration/>} />
+              <Route exact path="ScheduleAppointment" element={<AppointmentBooking />} />
+              <Route exact path="Appointments" element={<ScheduledAppointments />} />
+          </Routes>
     </BrowserRouter>
-    </>
   );
 }
 

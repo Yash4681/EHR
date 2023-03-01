@@ -40,7 +40,7 @@ const DoctorRegistrationForm = () => {
     <div className="container my-5">
       <h1>Doctor Registration Form</h1>
     <div className="doctor-registration-form">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="dform">
         <label>
           First Name:
           <input
